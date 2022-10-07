@@ -1,0 +1,47 @@
+Minimal test set for KingsPalindromeList.java
+
+AUTHORS:
+- Tomasz Soróbka (1808982)
+
+TEST CASE 1
+motivation  : Test for task 1: checking if the program when inputting only numbers that are already palindromes,
+              outputs only the same numbers back.
+input       : 1 5 1 141 252 87678 32123
+output      : 1 141 252 87678 32123
+
+
+TEST CASE 2
+motivation  : Test for task 1: checking if the program when inputting some of the numbers that are palindromes
+              and some that are not, outputs the palindrome numbers without changing and
+              not palidrome numbers transformed into palindromes. 
+input       : 1 6 18872 16561 2 333 909 334
+output      : 18881 16561 2 333 909 343
+
+
+TEST CASE 3
+motivation  : Test for task 2: No magic set in the input
+input       : 2 5 1 131 162 8 76567
+output      : 1
+
+
+TEST CASE 4
+motivation  : Test for task 2: input containing two different magic sets
+              (the program should output the size of the larger magic set)
+input       : 2 7 1 313 414 83238 929 2 121
+output      : 4
+
+
+TEST CASE 5
+motivation  : Test for task 3: magic set inputted not in the ascending order (should be sorted at the output)
+input       : 3 5 313 6521256 1 2 727
+output      : 1 313 6521256
+
+
+TEST CASE 6
+motivation  : Test for task 3: two magic sets of the same size in the input 
+              (outputted should be the one containing the largest element)
+input       : 3 6 1 313 414 2 727 828
+output      : 2 727 828
+
+
+

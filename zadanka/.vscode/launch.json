@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch SudokuSolverw",
+            "request": "launch",
+            "mainClass": "SudokuSolverw",
+            "projectName": "zadanka_e165a6d4"
+        },
+        {
+            "type": "java",
+            "name": "Launch SudokuSolver",
+            "request": "launch",
+            "mainClass": "SudokuSolver",
+            "projectName": "zadanka_e165a6d4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Cellulitis",
+            "request": "launch",
+            "mainClass": "Cellulitis",
+            "projectName": "zadanka_e165a6d4"
+        },
+        {
+            "type": "java",
+            "name": "Launch GuessingGameAdvanced",
+            "request": "launch",
+            "mainClass": "GuessingGameAdvanced",
+            "projectName": "zadanka_e165a6d4"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest All",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--runInBand"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest Current File",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "${fileBasenameNoExtension}",
+                "--config",
+                "jest.config.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
+        }
+    ]
+  }
