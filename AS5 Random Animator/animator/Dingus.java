@@ -5,10 +5,8 @@ import java.util.Random;
 /**
  * Dingus represents an arbitraty shape.
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Tomasz Soróbka
+ * @id 1808982
  */
 abstract class Dingus {
     /**
@@ -50,7 +48,10 @@ abstract class Dingus {
         y = random.nextInt(maxY);
 
         // Initialize to a random color
-        // TODO
+        float r = random.nextFloat();
+        float g = random.nextFloat();
+        float b = random.nextFloat();
+        color = new Color(r, g, b);
     }
 
     abstract void draw(Graphics g);

@@ -1,0 +1,24 @@
+q2:
+physics /B
+discrete /E
+
+electives q2:
+visualization /D
+
+
+*Introduction to business design (DAB150)/ A
+*Datamodelling and databases (2ID50) / E
+*Introduction to technology entrepreneurship (1ZEUB0) USE /A
+Economics of innovation: advanced (0SV100)/B
+Strategic and organizational perspectives on product innovation (1ZVK00) /B
+*Programming methods (2IPC0) / B
+
+Social psychology and consumer behavior (0HV30) /A
+*fundamentals of machine learning /A
+pytanie o USE kursy wiecej niz 1; w jednym timeslocie kursy; fundamentals of machine learning; 
+
+
+Automata premaster
+Data acquisition and visualization through embodied sensors (DASU20)
+The effectiveness of mathematics (2WH10) / E
+Future of mobility: how to evaluate predictions and forecasts (0SEUC0) /A USE

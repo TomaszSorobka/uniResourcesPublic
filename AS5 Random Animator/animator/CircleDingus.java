@@ -3,10 +3,8 @@ import java.awt.Graphics;
 /**
  * CircleDingus is an example of a very simple Dingus.
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Tomasz Soróbka
+ * @id 1808982
  */
 class CircleDingus extends Dingus {
     protected int radius;
