@@ -13,16 +13,20 @@ import java.awt.Graphics;
 class CrownDingus extends Dingus {
 
     private boolean filled; // true: filled; false: outline
-    private int[] xp = new int[8];
-    private int[] yp = new int[8];
-    private int npoints = 8;
+    // public int[] xp = new int[8];
+    // public int[] yp = new int[8];
+    // public int npoints = 8;
     private int rate;
     private double angle = random.nextDouble()*360;
 
     public CrownDingus(int maxX, int maxY) {
+        
         // initialize Dingus properties
         super(maxX, maxY);
-        rate = random.nextInt(maxX/50);
+        xp = new int[8];
+        yp = new int[8];
+        npoints = 8;
+        rate = random.nextInt(maxX/100);
          for (int i = 0; i<8; i++) {
              xp[i] = x;
              yp[i] = y;

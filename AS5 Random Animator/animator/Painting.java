@@ -1,7 +1,6 @@
 /* to do 
  * 1.bouncing physics (random angles, direction, etc. initiated once every press of the start Animation)
- * 2.random number of shpaes
- * 3.screenshotting (if animationON == true, do 5 screenshots interval 50 miliseconds)
+ * 3.screenshotting not saving
  * 4. komentarze
 */
 
@@ -15,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -58,6 +58,22 @@ public class Painting extends JPanel implements ActionListener {
     /*---- Dinguses ----*/
     ArrayList<Dingus> shapes;
     // ...
+    int numberOfDinguses;
+    int MAX_NUMBER_OF_DINGUSES = 30;
+    int[] xvelocity = new int[MAX_NUMBER_OF_DINGUSES];
+    int[] yvelocity = new int[MAX_NUMBER_OF_DINGUSES];
+
+    int[] lastBounceArray = new int[MAX_NUMBER_OF_DINGUSES];
+
+    int NUMBER_OF_DINGUSES_ANIMATION = 7;
+    HashSet indicesToAnimate = new HashSet(NUMBER_OF_DINGUSES_ANIMATION);
+
+    int numberOfCircles;
+    int numberOfCrowns;
+    int numberOfHourglasses;
+    int numberOfRectangles;
+    int numberOfTrees;
+    
 
     static boolean animationOn = false;
     /**
@@ -79,8 +95,56 @@ public class Painting extends JPanel implements ActionListener {
         }
 
         if (animationOn) {
+            int k = 0;
+            Boolean bounce = false;
+            int lastBounce = 0;
             for (Dingus shape: shapes){ 
-                shape.x += 1;
+
+                if (indicesToAnimate.contains(k)) {
+                    if (shape instanceof HourglassDingus || shape instanceof CrownDingus) {
+                        for (int i = 0; i < shape.npoints; i++) {
+                            if (shape.xp[i] > 800) {
+                                bounce = true;
+                                lastBounce = 1;
+                            } else if (shape.yp[i] > 450) {
+                                bounce = true;
+                                lastBounce = 2;
+                            } else if (shape.xp[i] < 0) {
+                                bounce = true;
+                                lastBounce = 3;
+                            } else if (shape.yp[i] < 0) {
+                                bounce = true;
+                                lastBounce = 4;
+                            }
+                            shape.xp[i] += xvelocity[k];
+                            shape.yp[i] += yvelocity[k];
+                        }
+                        
+                        
+                    } else {
+                        if (shape.x + shape.colistionWidth > 800) {
+                            bounce = true;
+                            lastBounce = 1;
+                        } else if (shape.y + shape.colistionWidth > 450) {
+                            bounce = true;
+                            lastBounce = 2;
+                        } else if (shape.x - shape.colistionWidth < 0) {
+                            bounce = true;
+                            lastBounce = 3;
+                        } else if (shape.y - shape.colistionWidth < 0) {
+                            bounce = true;
+                            lastBounce = 4;
+                        }
+                        shape.x += xvelocity[k];
+                        shape.y += yvelocity[k];
+                    }
+                    if (bounce && lastBounceArray[k] != lastBounce) {
+                       // bounceDingus(k, lastBounce);
+                        bounce = false;
+                        lastBounceArray[k] = lastBounce;
+                    }
+                }
+                k++;
             }
 
             try {
@@ -123,18 +187,39 @@ public class Painting extends JPanel implements ActionListener {
         // TODO
         shapes = new ArrayList<Dingus>();
         // create random shapes
-        for (int i = 0; i<10; i++) {
-            shapes.add(new TreeDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+        numberOfCircles = random.nextInt(4) + 2;
+        numberOfCrowns = random.nextInt(4) + 2;
+        numberOfTrees = random.nextInt(4) + 2;
+        numberOfRectangles = random.nextInt(4) + 2;
+        numberOfHourglasses = random.nextInt(4) + 2;
+        for (int i = 0; i<numberOfCircles; i++) {
+            
             shapes.add(new CircleDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
-            shapes.add(new RectangleDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
-            shapes.add(new HourglassDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
-            shapes.add(new CrownDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+            
         }
-        // TODO
+        for (int i = 0; i<numberOfCrowns; i++) {
+            shapes.add(new CrownDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+            
+        }
+        for (int i = 0; i<numberOfTrees; i++) {
+            shapes.add(new TreeDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+            
+        }
+        for (int i = 0; i<numberOfRectangles; i++) {
+            shapes.add(new RectangleDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+            
+        }
+        for (int i = 0; i<numberOfHourglasses; i++) {
+            shapes.add(new HourglassDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+            
+        }   
+        
+        numberOfDinguses = numberOfCircles + numberOfCrowns + numberOfHourglasses + numberOfRectangles + numberOfTrees;
+        
     }
 
     void recolor() {
-        numberOfRecoloration++; // do not change
+        numberOfRecoloration++; 
 
         for (Dingus shape: shapes){ 
             float r = random.nextFloat();
@@ -145,8 +230,66 @@ public class Painting extends JPanel implements ActionListener {
         }
     }
 
+    void generateVelocities() {
+        int yrand;
+        int xrand;
+        int ysign;
+        int xsign;
+        for (int i = 0; i < numberOfDinguses; i++) {
+            
+                ysign = random.nextInt(2);
+                xsign = random.nextInt(2);
+                if (ysign == 0) {
+                    ysign = -1;
+                }
+                if (xsign == 0) {
+                    xsign = -1;
+                }
+            
+            
+            yrand = (random.nextInt(6) + 1) * ysign;
+            xrand = (random.nextInt(6) + 1) * xsign;
+            xvelocity[i] = xrand;
+            yvelocity[i] = yrand;
+        }
+    }
+
+    void bounceDingus(int indexOfDingus, int lastBounce) {
+        int sign = random.nextInt(2);
+        if (sign == 0) {
+            sign = -1;
+        }
+        int rand = (random.nextInt(3) + 1) * sign;
+        
+        if (lastBounce == 1 || lastBounce == 3) {
+            xvelocity[indexOfDingus] *= -1;
+            yvelocity[indexOfDingus] *= -1;
+        } else {
+            yvelocity[indexOfDingus] *= -1;
+            xvelocity[indexOfDingus] *= -1;
+        }
+
+        
+    }
+
     void startAnimation() {
-        animationOn = true;
+        if (!animationOn) {
+            int rand;
+            indicesToAnimate.clear();
+            for (int i = 0; i < NUMBER_OF_DINGUSES_ANIMATION; i++) {
+                do {
+                    rand = random.nextInt(numberOfDinguses);
+                } while (indicesToAnimate.contains(rand));
+                
+                indicesToAnimate.add(rand);
+            }
+            if (!animationOn) {
+                generateVelocities();
+            }
+            animationOn = true;
+            
+            repaint();
+        }
 
     }
 
@@ -164,25 +307,64 @@ public class Painting extends JPanel implements ActionListener {
      * 
      */
     void saveScreenshot(Component component, String name) {
-        // minus 1 because the initial picture should not count
-        String randomInfo = "" + SEED + "+" + (numberOfRegenerates - 1);
-        System.out.println(SwingUtilities.isEventDispatchThread());
-        BufferedImage image = new BufferedImage(
-                component.getWidth(),
-                component.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
+        int numberOfScreenshots = 1;
+        if (animationOn) {
+            numberOfScreenshots = 5;
+        }
+        String nameCopy = new String(name);
 
-        // call the Component's paint method, using
-        // the Graphics object of the image.
-        Graphics graphics = image.getGraphics();
-        component.paint(graphics); // alternately use .printAll(..)
-        graphics.drawString(randomInfo, 0, component.getHeight());
+        for (int i = 0; i < numberOfScreenshots; i++) {
+            if (animationOn) {
+                name = nameCopy + "anim" + i;
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            // minus 1 because the initial picture should not count
+            String randomInfo = "" + SEED + "+" + (numberOfRegenerates - 1);
+            System.out.println(SwingUtilities.isEventDispatchThread());
+            BufferedImage image = new BufferedImage(
+                    component.getWidth(),
+                    component.getHeight(),
+                    BufferedImage.TYPE_INT_RGB);
 
-        try {
-            ImageIO.write(image, "PNG", new File(name + ".png"));
-            System.out.println("Saved screenshot as " + name);
-        } catch (IOException e) {
-            System.out.println("Saving screenshot failed: " + e);
+            // call the Component's paint method, using
+            // the Graphics object of the image.
+            Graphics graphics = image.getGraphics();
+            component.paint(graphics); // alternately use .printAll(..)
+            graphics.drawString(randomInfo, 0, component.getHeight());
+
+            try {
+                ImageIO.write(image, "PNG", new File(name + ".png"));
+                System.out.println("Saved screenshot as " + name);
+            } catch (IOException e) {
+                System.out.println("Saving screenshot failed: " + e);
+            }
         }
     }
+    // void saveScreenshot(Component component, String name) {
+    //     // minus 1 because the initial picture should not count
+    //     String randomInfo = "" + SEED + "+" + (numberOfRegenerates - 1);
+    //     System.out.println(SwingUtilities.isEventDispatchThread());
+    //     BufferedImage image = new BufferedImage(
+    //             component.getWidth(),
+    //             component.getHeight(),
+    //             BufferedImage.TYPE_INT_RGB);
+
+    //     // call the Component's paint method, using
+    //     // the Graphics object of the image.
+    //     Graphics graphics = image.getGraphics();
+    //     component.paint(graphics); // alternately use .printAll(..)
+    //     graphics.drawString(randomInfo, 0, component.getHeight());
+
+    //     try {
+    //         ImageIO.write(image, "PNG", new File(name + ".png"));
+    //         System.out.println("Saved screenshot as " + name);
+    //     } catch (IOException e) {
+    //         System.out.println("Saving screenshot failed: " + e);
+    //     }
+    // }
+
 }

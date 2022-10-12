@@ -14,6 +14,7 @@ class RectangleDingus extends Dingus {
     public RectangleDingus(int maxX, int maxY) {
         // intialize randomly the Dingus properties, i.e., position and color
         super(maxX, maxY);
+        colistionWidth = width;
         // initialize randomly the CircleDingus properties, i.e., radius and filledness
         width = random.nextInt(maxX/4);
         height = random.nextInt(maxY/4);

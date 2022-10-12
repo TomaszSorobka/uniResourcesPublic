@@ -22,6 +22,12 @@ abstract class Dingus {
     protected int x;
     protected int y;
 
+    protected int colistionWidth;
+
+    protected int xp[];
+    protected int yp[];
+    protected int npoints;
+
     /** 
      * Color used for drawing this shape.
      */

@@ -13,9 +13,7 @@ import java.awt.Graphics;
 class HourglassDingus extends Dingus {
 
     private boolean filled; // true: filled; false: outline
-    private int[] xp = new int[5];
-    private int[] yp = new int[5];
-    private int npoints = 5;
+    
     private int rate;
     private double angle = random.nextDouble()*360;
 
@@ -23,7 +21,10 @@ class HourglassDingus extends Dingus {
     public HourglassDingus(int maxX, int maxY) {
         // initialize Dingus properties
         super(maxX, maxY);
-        rate = random.nextInt(maxX/30);
+        xp = new int[5];
+        yp = new int[5];
+        npoints = 5;
+        rate = random.nextInt(maxX/100);
          for (int i = 0; i<5; i++) {
              xp[i] = x;
              yp[i] = y;
