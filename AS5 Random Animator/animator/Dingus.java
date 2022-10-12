@@ -21,12 +21,13 @@ abstract class Dingus {
      */
     protected int x;
     protected int y;
+    //added a variable that stores the width of the object, so the collisions are more accurate
+    protected int colisionWidth;
 
-    protected int colistionWidth;
-
+    //added array of coordinates for the more complex shapes
     protected int xp[];
     protected int yp[];
-    protected int npoints;
+    protected int nPoints;
 
     /** 
      * Color used for drawing this shape.

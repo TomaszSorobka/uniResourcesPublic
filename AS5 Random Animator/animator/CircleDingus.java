@@ -19,9 +19,9 @@ class CircleDingus extends Dingus {
     public CircleDingus(int maxX, int maxY) {
         // intialize randomly the Dingus properties, i.e., position and color
         super(maxX, maxY);
-        colistionWidth = radius;
+        colisionWidth = radius;
         // initialize randomly the CircleDingus properties, i.e., radius and filledness
-        radius = random.nextInt(maxX / 4);
+        radius = random.nextInt(maxX / 8);
         filled = random.nextBoolean();
     }
 

@@ -24,7 +24,7 @@ class TreeDingus extends Dingus {
     public TreeDingus(int maxX, int maxY) {
         // initialize Dingus properties
         super(maxX, maxY);
-        colistionWidth = crownRadius;
+        colisionWidth = crownRadius;
         // initialize TreeDingus properties
         crownRadius = random.nextInt(maxX / 4); // or something more sophisticated
         trunkHeight = random.nextInt((maxY - 2 * crownRadius) / 2);
