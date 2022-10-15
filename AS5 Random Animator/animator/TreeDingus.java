@@ -25,11 +25,17 @@ class TreeDingus extends Dingus {
         // initialize Dingus properties
         super(maxX, maxY);
         colisionWidth = crownRadius;
+        
         // initialize TreeDingus properties
         crownRadius = random.nextInt(maxX / 4); // or something more sophisticated
         trunkHeight = random.nextInt((maxY - 2 * crownRadius) / 2);
         trunkWidth = crownRadius / 3 + 1;
         filled = random.nextBoolean();
+
+        colisionHeightTop = crownRadius;
+        colisionHeightBot = trunkHeight + 2 * crownRadius;
+
+        
     }
 
     @Override

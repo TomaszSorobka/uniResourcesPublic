@@ -1,8 +1,9 @@
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 
 /** 
  * Main class for the homework assignment Random Animator.

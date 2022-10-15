@@ -14,6 +14,7 @@ class HourglassDingus extends Dingus {
     private int rate;
     private double angle = random.nextDouble() * 360;
 
+    //subclass constructor
     public HourglassDingus(int maxX, int maxY) {
         // initialize Dingus properties
         super(maxX, maxY);
@@ -43,7 +44,7 @@ class HourglassDingus extends Dingus {
         }
         // adjust the values for the x and y coordinates for the rotation of the shape
         for (int i = 1; i < nPoints - 1; i++) {
-            double angleRad = ((angle/180) * Math.PI);
+            double angleRad = ((angle / 180) * Math.PI);
             double cosAngle = Math.cos(angleRad);
             double sinAngle = Math.sin(angleRad);
             double dx = (xp[i] - x);

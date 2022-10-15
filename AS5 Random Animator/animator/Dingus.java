@@ -23,10 +23,12 @@ abstract class Dingus {
     protected int y;
     //added a variable that stores the width of the object, so the collisions are more accurate
     protected int colisionWidth;
+    protected int colisionHeightTop;
+    protected int colisionHeightBot;
 
     //added array of coordinates for the more complex shapes
-    protected int xp[];
-    protected int yp[];
+    protected int[] xp;
+    protected int[] yp;
     protected int nPoints;
 
     /** 

@@ -13,6 +13,7 @@ class CrownDingus extends Dingus {
     private int rate;
     private double angle = random.nextDouble() * 360;
 
+    //a subclass constructor
     public CrownDingus(int maxX, int maxY) {
         
         // initialize Dingus properties

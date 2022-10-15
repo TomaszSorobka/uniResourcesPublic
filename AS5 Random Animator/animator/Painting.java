@@ -1,11 +1,5 @@
-/* to do 
- * 1.bouncing physics (random angles, direction, etc. initiated once every press of the start Animation)
- * 3.screenshotting not saving
- * 4. komentarze
-*/
-
-import java.awt.Component;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -26,7 +20,6 @@ import javax.swing.SwingUtilities;
  * Paint with Dinguses, i.e., generate a new painting by making a random 
  * composition of Dingus shapes.
  *
- * TODO:
  *
  * @author Tomasz Soróbka
  * @id 1808982
@@ -59,18 +52,20 @@ public class Painting extends JPanel implements ActionListener {
     // ...
 
     int numberOfDinguses;
-    int MAX_NUMBER_OF_DINGUSES = 40;
+    static final int MAX_NUMBER_OF_DINGUSES = 40;
 
-    // initialize two arrays that will store the random x and y velocities of the dinguses that are animated
+    // initialize two arrays that will store the random x and y velocities of the dinguses
+    // that are animated
     int[] xVelocity = new int[MAX_NUMBER_OF_DINGUSES];
     int[] yVelocity = new int[MAX_NUMBER_OF_DINGUSES];
 
-    // stores what was the last bounce of each dingus, so it does not bounce indifinitely off of the same side 
+    // stores what was the last bounce of each dingus, 
+    //so it does not bounce indifinitely off of the same side 
     int[] lastBounceArray = new int[MAX_NUMBER_OF_DINGUSES];
 
     int numberOfAnimationDinguses;
     // a hashset to store the indices of the dinguses to be animated
-    HashSet indicesToAnimate;
+    HashSet<Integer> indicesToAnimate;
 
     // variables used to store the numbers of each kind of shape
     int numberOfCircles;
@@ -81,6 +76,7 @@ public class Painting extends JPanel implements ActionListener {
     
     // a boolean variable that stores the information whether the animation is live or not
     static boolean animationOn = false;
+
     /**
      * Create a new painting.
      */
@@ -95,7 +91,7 @@ public class Painting extends JPanel implements ActionListener {
         // draw all shapes
         
 
-        for (Dingus shape: shapes){ 
+        for (Dingus shape: shapes) { 
             shape.draw(g);
         }
 
@@ -110,15 +106,17 @@ public class Painting extends JPanel implements ActionListener {
             // a loop that goes through every shape in the shapes ArrayList
             for (Dingus shape: shapes) { 
 
-                // if the dingus with index k is in the list of dinguses that are to be animated, proceed
+                // if the dingus with index k is in the list of dinguses that are to be animated,
+                // proceed
                 if (indicesToAnimate.contains(k)) {
 
                     // if the shape is an hourglass or a crown, use different code than the rest
                     // as the coordinate variables are stored differently
                     if (shape instanceof HourglassDingus || shape instanceof CrownDingus) {
 
-                        // check for each vertex of the shape if it is out of bounds, if yes, set the value
-                        // of the bounce variable to true and indicate which side the dingus bounced off of 
+                        // check for each vertex of the shape if it is out of bounds, 
+                        //if yes, set the value of the bounce variable to true
+                        // and indicate which side the dingus bounced off of 
                         for (int i = 0; i < shape.nPoints; i++) {
                             if (shape.xp[i] > 800) {
                                 bounce = true;
@@ -142,13 +140,13 @@ public class Painting extends JPanel implements ActionListener {
                         if (shape.x + shape.colisionWidth > 800) {
                             bounce = true;
                             lastBounce = 1;
-                        } else if (shape.y + shape.colisionWidth > 450) {
+                        } else if (shape.y + shape.colisionHeightBot > 450) {
                             bounce = true;
                             lastBounce = 2;
                         } else if (shape.x - shape.colisionWidth < 0) {
                             bounce = true;
                             lastBounce = 3;
-                        } else if (shape.y - shape.colisionWidth < 0) {
+                        } else if (shape.y - shape.colisionHeightTop < 0) {
                             bounce = true;
                             lastBounce = 4;
                         }
@@ -213,43 +211,49 @@ public class Painting extends JPanel implements ActionListener {
         // TODO
         shapes = new ArrayList<Dingus>();
 
-        // generate the random number of shapes of each kind; the minimum is 2 for each of the 5 kinds of shapes
-        // which results in the least amount of shapes of 10; the maximum is 6 for each of the 5 kinds of shapes,
+        // generate the random number of shapes of each kind; 
+        //the minimum is 2 for each of the 5 kinds of shapes
+        // which results in the least amount of shapes of 10;
+        // the maximum is 6 for each of the 5 kinds of shapes,
         // which results in the maximum amount of shapes of 30;
-        numberOfCircles = random.nextInt(5) + 2;
-        numberOfCrowns = random.nextInt(5) + 2;
-        numberOfTrees = random.nextInt(5) + 2;
-        numberOfRectangles = random.nextInt(5) + 2;
-        numberOfHourglasses = random.nextInt(5) + 2;
+        numberOfCircles = random.nextInt(7) + 2;
+        numberOfCrowns = random.nextInt(7) + 2;
+        numberOfTrees = random.nextInt(7) + 2;
+        numberOfRectangles = random.nextInt(7) + 2;
+        numberOfHourglasses = random.nextInt(7) + 2;
 
         // Add the shapes to the ArrayList containing all the shapes
-        for (int i = 0; i<numberOfCircles; i++) {
+        for (int i = 0; i < numberOfCircles; i++) {
             shapes.add(new CircleDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
         }
 
-        for (int i = 0; i<numberOfCrowns; i++) {
+        for (int i = 0; i < numberOfCrowns; i++) {
             shapes.add(new CrownDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
         }
 
-        for (int i = 0; i<numberOfTrees; i++) {
+        for (int i = 0; i < numberOfTrees; i++) {
             shapes.add(new TreeDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
         }
 
-        for (int i = 0; i<numberOfRectangles; i++) {
-            shapes.add(new RectangleDingus((int) getSize().getWidth(), (int) getSize().getHeight()));
+        for (int i = 0; i < numberOfRectangles; i++) {
+            shapes.add(new RectangleDingus((int) getSize().getWidth(),
+                (int) getSize().getHeight()));
         }
 
-        for (int i = 0; i<numberOfHourglasses; i++) {
-            shapes.add(new HourglassDingus((int) getSize().getWidth(), (int) getSize().getHeight())); 
+        for (int i = 0; i < numberOfHourglasses; i++) {
+            shapes.add(new HourglassDingus((int) getSize().getWidth(),
+                (int) getSize().getHeight())); 
         }   
         
         // calculate the total number of dinguses
-        numberOfDinguses = numberOfCircles + numberOfCrowns + numberOfHourglasses + numberOfRectangles + numberOfTrees;
+        numberOfDinguses = numberOfCircles + numberOfCrowns + numberOfHourglasses
+            + numberOfRectangles + numberOfTrees;
         
     }
 
     /*
-     * A method which when called creates a new random color for each dingus and assigns those colors to dinguses
+     * A method which when called creates a new random color for each dingus and assigns
+     *  those colors to dinguses
      */
     void recolor() {
 
@@ -370,10 +374,12 @@ public class Painting extends JPanel implements ActionListener {
         for (int i = 0; i < numberOfScreenshots; i++) {
 
             if (animationOn) {
-                // add a "anim" string to the name of the screenshot taken when the animation was live
+                // add a "anim" string to the name of the screenshot taken
+                // when the animation was live
                 name = nameCopy + "anim" + i;
                 try {
-                    // wait 100 milliseconds between each screenshot so the movement of the shapes can be captures
+                    // wait 100 milliseconds between each screenshot so the movement
+                    // of the shapes can be captures
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
